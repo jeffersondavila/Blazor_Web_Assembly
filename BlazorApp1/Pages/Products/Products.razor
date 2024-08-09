@@ -1,9 +1,12 @@
 ﻿@page "/product"
-@inject ILogger<Products> logger;
+@inject ILogger<Products> logger
 @inject IProductService productService
+@inject NavigationManager navigationManager
 
 <PageTitle>Products</PageTitle>
 <ModuleTitle title="Productos"></ModuleTitle>
+
+<button class="btn-danger" @onclick="@(()=> navigationManager.NavigateTo("/addProduct"))">Registrar</button>
 
 @if (products?.Count > 0)
 {
