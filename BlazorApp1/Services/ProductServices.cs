@@ -21,7 +21,8 @@ namespace BlazorApp1
 
 			if (!response.IsSuccessStatusCode)
 			{
-				throw new ApplicationException(content);
+				//Console.WriteLine($"Error fetching products: {content}");
+				throw new ApplicationException($"Failed to fetch products: {response.StatusCode}");
 			}
 
 			return JsonSerializer.Deserialize<List<Product>>(content, options);
@@ -29,23 +30,25 @@ namespace BlazorApp1
 
 		public async Task PostProductos(Product productos)
 		{
-			var response = await client.PostAsync("/v1/products", JsonContent.Create(productos));
+			var response = await client.PostAsJsonAsync("/api/v1/products", productos);
 			var content = await response.Content.ReadAsStringAsync();
 
 			if (!response.IsSuccessStatusCode)
 			{
-				throw new Exception("No se pudo llevar a cabo el insert de los productos");
+				//Console.WriteLine($"Error posting product: {content}");
+				throw new Exception($"Failed to post product: {response.StatusCode}");
 			}
 		}
 
 		public async Task DeleteProductos(int codigoProducto)
 		{
-			var response = await client.DeleteAsync($"/v1/products/{codigoProducto}");
+			var response = await client.DeleteAsync($"/api/v1/products/{codigoProducto}");
 			var content = await response.Content.ReadAsStringAsync();
 
 			if (!response.IsSuccessStatusCode)
 			{
-				throw new Exception("No se pudo llevar a cabo la eliminacion de los productos");
+				//Console.WriteLine($"Error deleting product: {content}");
+				throw new Exception($"Failed to delete product: {response.StatusCode}");
 			}
 		}
 	}

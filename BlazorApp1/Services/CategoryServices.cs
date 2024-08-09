@@ -15,7 +15,7 @@ namespace BlazorApp1
 
 		public async Task<List<Category>?> GetCategorias()
 		{
-			var response = await client.GetAsync("/v1/categories");
+			var response = await client.GetAsync("/api/v1/categories");
 			var content = await response.Content.ReadAsStringAsync();
 
 			if(!response.IsSuccessStatusCode)
