@@ -1,0 +1,38 @@
+﻿@page "/product"
+@inject ILogger<Products> logger;
+@inject IProductService productService;
+
+<PageTitle>Products</PageTitle>
+
+<ModuleTitle title="Productos"></ModuleTitle>
+
+@if(products?.Count > 0)
+{
+	<div class="products-container">
+		@foreach (var product in products)
+		{
+			<div class="card" style="width: 18rem;">
+				<img src="@product.images[0]" class="card-img-top" alt="Product">
+				<div class="card-body">
+					<h5 class="card-title">@product.title</h5>
+					<p class="card-text">@product.price?.ToString("C")</p>
+				</div>
+			</div>
+		}
+	</div>
+}
+
+@code {
+	private List<Product>? products;
+
+	protected override async Task OnInitializedAsync()
+	{
+		products = await productService.GetProductos();
+	}
+
+	private async Task<List<Product>> GetProducts()
+	{
+		return await productService.GetProductos();
+	}
+
+}

@@ -1,7 +1,6 @@
-﻿using BlazorApp1.Models;
-using System.Text.Json;
+﻿using System.Text.Json;
 
-namespace BlazorApp1.Services
+namespace BlazorApp1
 {
 	public class CategoryServices : ICategoryService
 	{

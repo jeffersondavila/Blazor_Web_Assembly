@@ -1,8 +1,7 @@
-﻿using BlazorApp1.Models;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace BlazorApp1.Services
+namespace BlazorApp1
 {
 	public class ProductServices : IProductService
 	{
@@ -17,7 +16,7 @@ namespace BlazorApp1.Services
 
 		public async Task<List<Product>?> GetProductos()
 		{
-			var response = await client.GetAsync("/v1/products");
+			var response = await client.GetAsync("/api/v1/products");
 			var content = await response.Content.ReadAsStringAsync();
 
 			if (!response.IsSuccessStatusCode)
