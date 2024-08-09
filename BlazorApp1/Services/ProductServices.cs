@@ -9,16 +9,23 @@ namespace BlazorApp1.Services
 		private readonly HttpClient client;
 		private readonly JsonSerializerOptions options;
 
-		public ProductServices(HttpClient httpClient, JsonSerializerOptions optionsJson)
+		public ProductServices(HttpClient httpClient)
 		{
-			client = httpClient;
-			options = optionsJson;
+			this.client = httpClient;
+			options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 		}
 
 		public async Task<List<Product>?> GetProductos()
 		{
 			var response = await client.GetAsync("/v1/products");
-			return await JsonSerializer.DeserializeAsync<List<Product>>(await response.Content.ReadAsStreamAsync());
+			var content = await response.Content.ReadAsStringAsync();
+
+			if (!response.IsSuccessStatusCode)
+			{
+				throw new ApplicationException(content);
+			}
+
+			return JsonSerializer.Deserialize<List<Product>>(content, options);
 		}
 
 		public async Task PostProductos(Product productos)
@@ -37,9 +44,10 @@ namespace BlazorApp1.Services
 			var response = await client.DeleteAsync($"/v1/products/{codigoProducto}");
 			var content = await response.Content.ReadAsStringAsync();
 
-			if (!response.IsSuccessStatusCode) 
+			if (!response.IsSuccessStatusCode)
 			{
 				throw new Exception("No se pudo llevar a cabo la eliminacion de los productos");
 			}
+		}
 	}
 }

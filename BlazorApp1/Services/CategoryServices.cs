@@ -24,7 +24,6 @@ namespace BlazorApp1.Services
 				throw new ApplicationException(content);
 			}
 
-			// return await JsonSerializer.DeserializeAsync<List<Category>>(await response.Content.ReadAsStreamAsync());
 			return JsonSerializer.Deserialize<List<Category>>(content,options);
 		}
 	}
