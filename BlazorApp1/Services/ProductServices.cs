@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace BlazorApp1.Services
 {
-	public class ProductServices
+	public class ProductServices : IProductService
 	{
 		private readonly HttpClient client;
 		private readonly JsonSerializerOptions options;
@@ -49,5 +49,12 @@ namespace BlazorApp1.Services
 				throw new Exception("No se pudo llevar a cabo la eliminacion de los productos");
 			}
 		}
+	}
+
+	public interface IProductService
+	{
+		Task<List<Product>?> GetProductos();
+		Task PostProductos(Product product);
+		Task DeleteProductos(int productId);
 	}
 }

@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace BlazorApp1.Services
 {
-	public class CategoryServices
+	public class CategoryServices : ICategoryService
 	{
 		private readonly HttpClient client;
 		private readonly JsonSerializerOptions options;
@@ -26,5 +26,10 @@ namespace BlazorApp1.Services
 
 			return JsonSerializer.Deserialize<List<Category>>(content,options);
 		}
+	}
+
+	public interface ICategoryService
+	{
+		Task<List<Category>> GetCategorias();
 	}
 }
